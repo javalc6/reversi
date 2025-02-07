@@ -1,4 +1,4 @@
-# Maze
+# Reversi
 The purpose of this project is to explore [Reversi](https://en.wikipedia.org/wiki/Reversi) (also known as Othello) game, which is a game based on a grid with eight rows and eight columns. 
 This repository contains a collection of utilities to solve Reversi game.
 
