@@ -1,5 +1,5 @@
 # Maze
-The purpose of this project is to explore [Reversi](https://en.wikipedia.org/wiki/Reversi) (know also as Othello) game, which is a game based on a grid with eight rows and eight columns. 
+The purpose of this project is to explore [Reversi](https://en.wikipedia.org/wiki/Reversi) (also known as Othello) game, which is a game based on a grid with eight rows and eight columns. 
 This repository contains a collection of utilities to solve Reversi game.
 
 In Reversi game each player must place a new piece in a position that there exists at least one straight (horizontal, vertical, or diagonal) line between the new piece and another piece of the same color, with one or more contiguous opposite pieces between them.
@@ -39,9 +39,9 @@ Note that results change at each execution, as the algorithm is based on randomn
 
 # View the board using the transcript
 
-To view the board corresponding to a transcript, you can use the following website, by replacing _transcript_ part with the effective value:
+To view the board corresponding to a transcript, you can use the following website, by replacing _transcript_ string with the effective value:
 ```
-https://thesaurus.altervista.org/reversi?ts=_transcript_
+https://thesaurus.altervista.org/reversi?ts=transcript
 
 e.g.
 
