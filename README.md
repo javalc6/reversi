@@ -8,7 +8,7 @@ Black color starts first move. When player cannot move, the other player takes t
 
 Following java applications help finding interesting solutions in the Reversi domain:
 * SymmetrySeeker, it looks for Reversi games ending with a _symmetric_ board using random algorithm.
-* GameScanner, it looks for all Reversi games with upto _max_ moves with the option to filter only games ending with a _symmetric_ boards.
+* GameScanner, it looks for all Reversi games with upto _max_ moves with the option to filter only games ending with _symmetric_ board.
 
 # Finding symmetric boards
 The application SymmetrySeeker looks for random Reversi games ending with a _symmetric_ board. To compile it run following command:
@@ -25,7 +25,7 @@ java SymmetrySeeker [-v] [number of solutions]
 If you don't specify the number of solutions, SymmetrySeeker will find 10 random solutions.
 
 # Finding all games upto a defined maximum number of moves
-The application GameScanner looks for all Reversi games with upto _max_ moves with the option to filter only games ending with a _symmetric_ boards. To compile it run following command:
+The application GameScanner looks for all Reversi games with upto _max_ moves with the option to filter only games ending with _symmetric_ board. To compile it run following command:
 ```
 javac GameScanner.java
 ```
