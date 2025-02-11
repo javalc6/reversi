@@ -6,8 +6,12 @@ In Reversi game each player must place a new piece in a position that there exis
 
 Black color starts first move. When player cannot move, the other player takes the turn. When neither players can move, the game ends. The winner is the player that owns more pieces.
 
+Following java applications help finding interesting solutions in the Reversi domain:
+* SymmetrySeeker, it looks for Reversi games ending with a _symmetric_ board using random algorithm.
+* GameScanner, it looks for all Reversi games with upto _max_ moves with the option to filter only games ending with a _symmetric_ boards.
+
 # Finding symmetric boards
-The application SymmetrySeeker looks for Reversi games ending with a _symmetric_ board. To compile it run following command:
+The application SymmetrySeeker looks for random Reversi games ending with a _symmetric_ board. To compile it run following command:
 ```
 javac SymmetrySeeker.java
 ```
@@ -19,6 +23,20 @@ java SymmetrySeeker [-v] [number of solutions]
 -v verbose
 ```
 If you don't specify the number of solutions, SymmetrySeeker will find 10 random solutions.
+
+# Finding all games upto a defined maximum number of moves
+The application GameScanner looks for all Reversi games with upto _max_ moves with the option to filter only games ending with a _symmetric_ boards. To compile it run following command:
+```
+javac GameScanner.java
+```
+
+To run the application use the following command:
+```
+java java GameScanner [-s] <max number of moves to explore> [<output filename>]
+
+-s                Optional. If present, the search is restricted to only symmetric solutions.
+<output filename> Optional. Specifies the file to write the found solutions to. 
+```
 
 # Example
 
@@ -36,6 +54,27 @@ Symmetric board with transcript = D3E3F5E6F3E2F7C3E1G3B2E7E8G6G4D6C6A1B3A3C4G8H3
 Symmetric board with transcript = F5D6C3G5D7B2H5D8A1D3C4B3B4A2D2F4G4D1F6G3C5A4E3H4B5E6E7C2C1E8H2B6A3B1A5H6E2C6F7E1C7B7F2G7B8A7G6F3F8G8F1H7A8H3H8G1C8G2A6H1
 ```
 Note that results change at each execution, as the algorithm is based on randomness.
+
+Running GameScanner with parameters 9 and -s provides following output:
+```
+F5F4D3D6D7E3F3C5B5
+F5D6C5F6E7F4G5E6E3
+F5D6C5F4E7F6G5E6E3
+F5D6C5F4E3F6G5E6E7
+E6F4E3F6G5D6E7F5C5
+E6F4E3D6G5F6E7F5C5
+E6F4E3D6C5F6E7F5G5
+E6D6C4F4G4C5C6E3E2
+D3E3F5C5B5F4F3D6D7
+D3C5D6E3F4C3D2C4B4
+D3C5D6E3B4C3D2C4F4
+D3C5D6C3B4E3D2C4F4
+C4E3F4C5D6C3B4D3D2
+C4E3F4C5D2C3B4D3D6
+C4E3F4C3D2C5B4D3D6
+C4C5E6E3E2D6C6F4G4
+Number of found solutions: 16
+```
 
 # View the board using the transcript
 
