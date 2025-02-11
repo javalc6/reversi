@@ -56,10 +56,10 @@ public class SymmetrySeeker extends AbstractTest {
 			Move move = new Move();
 			board.clear();
 			while (board.userCanMove(TKind.black) || board.userCanMove(TKind.white)) {
-				if (board.findMove(TKind.black, DEFAULT_LEVEL, move, strategy, null, null, false, random, true)) {
+				if (board.findMove(TKind.black, DEFAULT_LEVEL, move, strategy, null, false, random)) {
 					board.move(move.i, move.j, TKind.black);
 				}
-				if (board.findMove(TKind.white, DEFAULT_LEVEL, move, strategy, null, null, false, random, false)) {
+				if (board.findMove(TKind.white, DEFAULT_LEVEL, move, strategy, null, false, random)) {
 					board.move(move.i, move.j, TKind.white);
 				}
 			}
