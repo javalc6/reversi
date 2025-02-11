@@ -9,10 +9,16 @@ import java.util.Random;
 
 import reversi.AbstractTest;
 import reversi.Move;
-import reversi.ReversiScenario;
+import reversi.SymmetryChecker;
 import reversi.Strategy;
 import reversi.TKind;
 
+/**
+ * The SymmetrySeeker class is designed to find and display symmetric game board states in a game.
+ * It simulates game play by making moves for two players (black and white) until no more moves are possible.
+ * It then checks if the resulting board configuration is symmetric and prints the board's transcript if it is.
+ * The class can be run with command-line arguments to control the number of symmetric solutions to find and the verbosity of the output.
+ */
 public class SymmetrySeeker extends AbstractTest {
 	private final static int DEFAULT_NUMBER_OF_SOLUTIONS = 10;
 	private final static int DEFAULT_LEVEL = 1;
@@ -42,8 +48,6 @@ public class SymmetrySeeker extends AbstractTest {
 		long t = System.nanoTime();
 		Random random = new Random();
 
-		ReversiScenario revScenario = board.getReversiScenario();
-
 		final Strategy strategy = normal;
 		int n_games = 0;
 		int win = 0;
@@ -52,10 +56,10 @@ public class SymmetrySeeker extends AbstractTest {
 			Move move = new Move();
 			board.clear();
 			while (board.userCanMove(TKind.black) || board.userCanMove(TKind.white)) {
-				if (board.findMove(TKind.black, DEFAULT_LEVEL, move, strategy, null, false, random)) {
+				if (board.findMove(TKind.black, DEFAULT_LEVEL, move, strategy, null, null, false, random, true)) {
 					board.move(move.i, move.j, TKind.black);
 				}
-				if (board.findMove(TKind.white, DEFAULT_LEVEL, move, strategy, null, false, random)) {
+				if (board.findMove(TKind.white, DEFAULT_LEVEL, move, strategy, null, null, false, random, false)) {
 					board.move(move.i, move.j, TKind.white);
 				}
 			}
@@ -64,7 +68,7 @@ public class SymmetrySeeker extends AbstractTest {
 			n_games++;
 
 			long[] myboard = board.getBoard();
-			if (checkboard(myboard[0]) && checkboard(myboard[1])) {
+			if (SymmetryChecker.checkSymmetry(myboard)) {
 				System.out.println("Symmetric board with transcript = " + board.getTranscript());
 				if (verbose)
 					board.println();
@@ -77,84 +81,6 @@ public class SymmetrySeeker extends AbstractTest {
 		long delta = System.nanoTime()-t;
 		if (verbose)
 			System.out.println("elapsed time:"+delta/1e9+" s");
-	}
-
-    private static final boolean[] PalindromeTable = new boolean[256];
-
-    static {
-        for (int i = 0; i < 256; i++) {
-			byte x = (byte) i;
-			byte reverseBits = 0;
-			for (int j = 0; j < 8; j++) {
-				reverseBits <<= 1;
-				reverseBits |= (x & 1);
-				x >>= 1;
-			}
-			PalindromeTable[i] = reverseBits == (byte) i;
-        }
-    }
-
-	private static boolean checkboard(long aboard) {
-		byte[] board = new byte[8];
-		for (int i = 7; i >= 0; i--) {
-			board[i] = (byte)(aboard & 0xFF);
-			aboard >>= 8;
-		}
-		boolean test = true;
-//first test
-		for (int i = 0; i < 4; i++) {
-			if (board[i] != board[7 - i]) {
-				test = false;
-				break;
-			}
-		}
-		if (test) return true;
-	
-//second test
-		test = true;
-		for (int i = 0; i < 8; i++) {
-			if (!PalindromeTable[board[i] & 0xFF]) {
-				test = false;
-				break;
-			}
-		}
-		if (test) return true;
-
-//third test - mirror board diagonal 1
-		test = true;
-        byte[] mirrored = new byte[8];
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                int bit = (board[i] >> (7 - j)) & 1;
-                mirrored[j] |= (byte) (bit << (7 - i));
-            }
-        }
-		for (int i = 0; i < 8; i++) {
-			if (board[i] != mirrored[i]) {
-				test = false;
-				break;
-			}
-		}
-		if (test) return true;
-
-//fourth test - mirror board diagonal 2
-		test = true;
-        mirrored = new byte[8];
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                int bit = (board[i] >> j) & 1;
-                mirrored[j] |= (byte) (bit << i);
-            }
-        }
-		for (int i = 0; i < 8; i++) {
-			if (board[i] != mirrored[i]) {
-				test = false;
-				break;
-			}
-		}
-		return test;
 	}
 
 }
